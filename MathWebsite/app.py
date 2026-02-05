@@ -111,7 +111,7 @@ def generate_questions(subject, topic, num_questions, difficulty):# Define a fun
         response = client.chat.completions.create(
   model="gpt-4-turbo",
   messages=[
-    {"role": "user", "content": f"Create {num_questions} questions about {topic} with grade {difficulty} difficulty. Make it a contest question(uses thinking) not just using formulas. If {topic} is not a part of {subject}, return Please enter a valid topic, which relates to {subject}. However, if the topic is even semi-related, then continue normally. Remove most fluff, and each question should be on a new line. There should be no empty lines. Please don't use any special formatting or symbols."}
+    {"role": "user", "content": f"Create {num_questions} questions about {topic} with grade {difficulty} difficulty. Make it a contest question(uses thinking) not just using formulas. If {topic} is not a part of {subject}, return Please enter a valid topic, which relates to {subject}. However, if the topic is even semi-related, then continue normally. Remove most fluff, and each question should be on a new line. There should be no empty lines. Please don't use any special formatting or symbols including for HTML."}
   ])
         print(difficulty)
 # Send a prompt to the OpenAI API asking to generate a specific number of questions about the given topic.
@@ -133,7 +133,7 @@ def solve():# Receive the question from the request data.
         response = client.chat.completions.create(
             model="gpt-4-turbo",
             messages=[
-                {"role": "user", "content": f"Create a answer to the question {question}. Make the answer one sentence or 2(in simple terminology) if its not a math question. If it is a math question, create a 1-5 step response to the question. Please don't use any special formatting or symbols for all types of questions."}
+                {"role": "user", "content": f"Create a answer to the question {question}. Make the answer one sentence or 2(in simple terminology) if its not a math question. If it is a math question, create a 1-5 step response to the question. Please don't use any special formatting or symbols for all types of questions including for HTML."}
             ])
         
         solution = response.choices[0].message.content# Extract and return the solution from the API response.
@@ -152,7 +152,7 @@ def checkAnswer():
     response = client.chat.completions.create(
         model="gpt-4-turbo",
         messages=[
-            {"role": "user", "content": f"Is {answer} the correct answer to {question}? Return a one word answer, either Correct or Incorrect."}
+            {"role": "user", "content": f"Is {answer} the correct answer to {question}? Return a one word answer, either Correct or Incorrect. Give the user leniency, and look for them having the general solution (which makes sense and solved the question)"}
         ]
     )
 
